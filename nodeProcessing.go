@@ -127,6 +127,7 @@ func (r *PdfRenderer) processItem(node *bf.Node, entering bool) {
 			r.cs.peek().listkind, r.cs.peek().itemNumber+1),
 			fmt.Sprintf("%v", node.ListData))
 		r.cr() // newline before getting started
+
 		x := &containerState{containerType: bf.Item,
 			textStyle: r.Normal, itemNumber: r.cs.peek().itemNumber + 1,
 			listkind:       r.cs.peek().listkind,
@@ -146,6 +147,7 @@ func (r *PdfRenderer) processItem(node *bf.Node, entering bool) {
 		}
 		// with the bullet done, now set the left margin for the text
 		r.Pdf.SetLeftMargin(r.cs.peek().leftMargin + (4 * r.em))
+
 		// set the cursor to this point
 		r.Pdf.SetX(r.cs.peek().leftMargin + (4 * r.em))
 	} else {
@@ -260,6 +262,7 @@ func (r *PdfRenderer) processParagraph(node *bf.Node, entering bool) {
 			if t == unordered || t == ordered || t == definition {
 				if r.cs.peek().firstParagraph {
 					r.cs.peek().firstParagraph = false
+					r.cr()
 				} else {
 					r.tracer("Not First Para within a list", "")
 					r.cr()
