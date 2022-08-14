@@ -166,12 +166,22 @@ func NewPdfRenderer(orient, papersz, pdfFile, tracerFile string) *PdfRenderer {
 	r.IndentValue = 3 * r.em
 
 	//r.current = r.normal // set default
+	// r.cs = states{stack: make([]*containerState, 0)}
+	// initcurrent := &containerState{containerType: bf.Paragraph,
+	// 	listkind:  notlist,
+	// 	textStyle: r.Normal, leftMargin: r.mleft}
+	// r.cs.push(initcurrent)
+	return r
+}
+
+func (r *PdfRenderer) LoadDefaultSTyle() {
+
 	r.cs = states{stack: make([]*containerState, 0)}
 	initcurrent := &containerState{containerType: bf.Paragraph,
 		listkind:  notlist,
 		textStyle: r.Normal, leftMargin: r.mleft}
 	r.cs.push(initcurrent)
-	return r
+
 }
 
 // Process takes the markdown content, parses it to generate the PDF
